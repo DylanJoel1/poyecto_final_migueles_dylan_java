@@ -33,6 +33,16 @@ public class ArticuloController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
+   @GetMapping("/nombre/{nombre}")
+public ResponseEntity<List<Articulo>> obtenerPorNombre(@PathVariable String nombre) {
+    List<Articulo> articulos = articuloService.buscarPorNombre(nombre);
+
+    if (articulos.isEmpty()) {
+        return ResponseEntity.notFound().build();
+    }
+
+    return ResponseEntity.ok(articulos);
+}
     @PostMapping
     public Articulo crear(@RequestBody Articulo articulo) {
         return articuloService.guardarArticulo(articulo);
@@ -54,4 +64,5 @@ public class ArticuloController {
         articuloService.eliminarArticulo(id);
         return ResponseEntity.noContent().build();
     }
+
 }
